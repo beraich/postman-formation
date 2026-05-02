@@ -278,6 +278,19 @@
 				"header": []
 			},
 			"response": []
+		},
+		{
+			"name": "mockup",
+			"id": "b6b866aa-25b1-4885-bd4d-e220ec447a84",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://75fbd16d-7056-4b49-83ba-d6469d0ccafd.mock.pstmn.io/users/1"
+			},
+			"response": []
 		}
 	]
 }
