@@ -49,6 +49,23 @@
 				},
 				{
 					"name": "Créer un post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e5c260db-645d-4e65-9a20-e8f6b915f3cd",
+								"exec": [
+									"pm.environment.set(",
+									"    \"timestamp\",",
+									"    new Date().toISOString()",
+									");"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "cb056540-8478-4735-9ce7-e399620b8dca",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
