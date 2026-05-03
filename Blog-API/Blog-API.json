@@ -1,0 +1,86 @@
+{
+	"info": {
+		"_postman_id": "d55c6d97-39e6-4759-a9f8-c434e8d9dc35",
+		"name": "Blog-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "Tous les Posts",
+					"id": "b66972f0-1cd8-499b-b6ff-c84501d44dcc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts"
+					},
+					"response": []
+				},
+				{
+					"name": "Un Post par ID",
+					"id": "4bea6beb-51c6-4c33-bc10-f6028504817a",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts/{{post_id}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Commentaires d'un post",
+					"id": "d91732ad-72c3-454b-b46a-28214434e4db",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts/{{post_id}}/comments"
+					},
+					"response": []
+				},
+				{
+					"name": "Créer un post",
+					"id": "cb056540-8478-4735-9ce7-e399620b8dca",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 2,\n    \"title\": \"Formation-Postman-J1\",\n    \"body\": \"Jour 1 de la Formation Postman par Ambient.it\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/posts"
+					},
+					"response": []
+				}
+			],
+			"id": "16b9f722-7be4-44b4-a868-f3aa4e247c08"
+		},
+		{
+			"name": "Users",
+			"item": [],
+			"id": "0b169022-45d0-43d0-bdce-dc3f7a1a0fce"
+		},
+		{
+			"name": "Comments",
+			"item": [],
+			"id": "91270432-8978-40d7-b5e9-e718acfaf572"
+		}
+	]
+}
