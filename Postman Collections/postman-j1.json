@@ -149,7 +149,24 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"url": "https://jsonplaceholder.typicode.com/posts"
+				"url": {
+					"raw": "https://jsonplaceholder.typicode.com/posts?userId=1",
+					"protocol": "https",
+					"host": [
+						"jsonplaceholder",
+						"typicode",
+						"com"
+					],
+					"path": [
+						"posts"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1"
+						}
+					]
+				}
 			},
 			"response": [
 				{
@@ -289,6 +306,19 @@
 				"method": "GET",
 				"header": [],
 				"url": "https://75fbd16d-7056-4b49-83ba-d6469d0ccafd.mock.pstmn.io/users/1"
+			},
+			"response": []
+		},
+		{
+			"name": "get-all-posts",
+			"id": "3673f61e-5e92-45d1-9aab-2183ab80bd0a",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://jsonplaceholder.typicode.com/posts/5"
 			},
 			"response": []
 		}
