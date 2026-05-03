@@ -10,6 +10,26 @@
 			"item": [
 				{
 					"name": "Tous les Posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9f6750e9-5507-4d79-aded-5bcbae36c122",
+								"exec": [
+									"pm.test(\"Status 200\", function() {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Array non vide\", function() {",
+									"  const data = pm.response.json();",
+									"  pm.expect(data.length).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "b66972f0-1cd8-499b-b6ff-c84501d44dcc",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
