@@ -321,6 +321,46 @@
 				"url": "https://jsonplaceholder.typicode.com/posts/5"
 			},
 			"response": []
+		},
+		{
+			"name": "weather Marseille",
+			"id": "46674ba9-d858-4417-a217-11708e7c3127",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?lat={{latitude}}&lon={{longitude}}&appid={{api_key_weather}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "lat",
+							"value": "{{latitude}}"
+						},
+						{
+							"key": "lon",
+							"value": "{{longitude}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{api_key_weather}}"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
