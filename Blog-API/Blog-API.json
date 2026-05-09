@@ -314,8 +314,18 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"title\": \"Tester les APIs\",\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos/{{TodoId}}"
 					},
 					"response": []
 				}
@@ -327,7 +337,7 @@
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "413d097f-72f5-42fd-bbb7-5e7b3b539796",
+				"id": "ee312c28-d004-4e75-85be-316141d07bc4",
 				"type": "text/javascript",
 				"packages": {},
 				"requests": {},
@@ -339,7 +349,7 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "b84bf1dd-f056-4429-ac07-01554cfd1680",
+				"id": "65af5c44-8228-4c74-bd22-63a8dcc0b8b7",
 				"type": "text/javascript",
 				"packages": {},
 				"requests": {},
