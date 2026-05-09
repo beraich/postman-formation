@@ -328,6 +328,40 @@
 						"url": "{{base_url}}/todos/{{TodoId}}"
 					},
 					"response": []
+				},
+				{
+					"name": "Partial Replace Todo",
+					"id": "16ba42aa-170b-460f-90f3-ab9eb6c2793c",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"title\": \"Tester les APIs\",\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos/{{TodoId}}"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Todo",
+					"id": "64335d58-96f5-44ff-8f00-15ac7a1c04db",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "dd739869-2833-48f4-b988-cae187b5c85f"
