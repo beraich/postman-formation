@@ -336,11 +336,11 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "PUT",
+						"method": "PATCH",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": 5,\n    \"title\": \"Tester les APIs\",\n    \"completed\": false\n}",
+							"raw": "{\n    \"completed\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -358,8 +358,13 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"title\": \"Tester les APIs\",\n    \"completed\": false\n}"
+						},
+						"url": "{{base_url}}/todos/{{TodoId}}"
 					},
 					"response": []
 				}
