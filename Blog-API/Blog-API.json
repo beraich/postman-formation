@@ -271,9 +271,54 @@
 						"url": "{{base_url}}/todos"
 					},
 					"response": []
+				},
+				{
+					"name": "Get one Todo By Id",
+					"id": "a78c6986-e0a6-4a31-97ab-b727998ea9dc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/todos/{{TodoId}}"
+					},
+					"response": []
 				}
 			],
 			"id": "dd739869-2833-48f4-b988-cae187b5c85f"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "413d097f-72f5-42fd-bbb7-5e7b3b539796",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b84bf1dd-f056-4429-ac07-01554cfd1680",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "TodoId",
+			"value": ""
 		}
 	]
 }
