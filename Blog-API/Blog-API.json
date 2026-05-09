@@ -284,6 +284,18 @@
 						"url": "{{base_url}}/todos/{{TodoId}}"
 					},
 					"response": []
+				},
+				{
+					"name": "Create Todo",
+					"id": "b92985e4-e9d3-441c-899d-a0137d51d57f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			],
 			"id": "dd739869-2833-48f4-b988-cae187b5c85f"
