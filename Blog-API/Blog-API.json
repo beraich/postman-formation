@@ -292,6 +292,28 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 1,\n    \"title\": \"Comprendre les APIs\",\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos"
+					},
+					"response": []
+				},
+				{
+					"name": "Replace Todo",
+					"id": "51779612-70e6-437e-9693-05028ef02fc2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
 						"method": "GET",
 						"header": []
 					},
