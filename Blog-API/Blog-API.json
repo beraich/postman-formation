@@ -281,7 +281,7 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": "{{base_url}}/todos/{{TodoId}}"
+						"url": "{{base_url}}/todos/255"
 					},
 					"response": []
 				},
@@ -296,14 +296,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"userId\": 1,\n    \"title\": \"Comprendre les APIs\",\n    \"completed\": false\n}",
+							"raw": "{\n    \"userId\": 1,\n    \"todo\": \"Comprendre les APIs\",\n    \"completed\": false\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "{{base_url}}/todos"
+						"url": "{{base_url}}/todos/add"
 					},
 					"response": []
 				},
