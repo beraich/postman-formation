@@ -361,6 +361,42 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "https://dummyjson.com/auth/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d184013e-a49e-4b4c-af62-252a7684129f",
+						"exec": [
+							"pm.environment.set(\"access_token\", pm.response.json().accessToken);"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "7273a476-1d0c-4361-93c0-afd8c2a4afb9",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"emilys\",\n    \"password\": \"emilyspass\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://dummyjson.com/auth/login"
+			},
+			"response": []
 		}
 	]
 }
