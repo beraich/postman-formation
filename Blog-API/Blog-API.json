@@ -2,6 +2,7 @@
 	"info": {
 		"_postman_id": "d55c6d97-39e6-4759-a9f8-c434e8d9dc35",
 		"name": "Blog-API",
+		"description": "# **Blog-API**\n\nUne collection de test des API, créée dans le cadre d'une formation sur Postman proposée par Ambient.it et animée par Youssef BERAICH.\n\nCette collections utilise:\n\n- 2 Environnements : Dev et Prod\n    \n- 2 APIs public : jsonplaceholder et dummyjson",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
