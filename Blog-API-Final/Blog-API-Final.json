@@ -1,0 +1,673 @@
+{
+	"info": {
+		"_postman_id": "5d9d17f4-4845-4f27-bdc6-a129149b27e5",
+		"name": "Blog-API",
+		"description": "# **Blog-API**\n\nUne collection de test des API, créée dans le cadre d'une formation sur Postman proposée par Ambient.it et animée par Youssef BERAICH.\n\nCette collections utilise:\n\n- 2 Environnements : Dev et Prod\n    \n- 2 APIs public : jsonplaceholder et dummyjson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login user and get token and id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a97709a5-19d4-44bc-9c3b-1c6ad6a2355b",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"const responseJson = pm.response.json();",
+									"",
+									"pm.environment.set(\"access_token\",responseJson.accessToken);",
+									"pm.environment.set(\"loged_user_id\", responseJson.id);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "ba53d112-1cfa-4f67-a59e-2495ccfebc2b",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/login",
+						"description": "## Login User and Get Token and Id\n\nAuthentifie un utilisateur auprès de l'API DummyJSON et récupère un token d'accès ainsi que l'identifiant de l'utilisateur connecté.\n\n**Méthode :** `POST`\n**URL :** `{{base_url}}/auth/login`\n\n---\n\n### Authentification\n\nAucune authentification préalable n'est requise pour cet endpoint.\n\n---\n\n### Corps de la requête\n\nLe corps de la requête doit être au format JSON :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `username` | `string` | Nom d'utilisateur (variable d'environnement `{{username}}`) |\n| `password` | `string` | Mot de passe (variable d'environnement `{{password}}`) |\n\n**Exemple :**\n```json\n{\n  \"username\": \"{{username}}\",\n  \"password\": \"{{password}}\"\n}\n```\n\n---\n\n### Script de test\n\nAprès réception de la réponse, le script de test extrait automatiquement les valeurs suivantes et les enregistre dans les variables d'environnement :\n- `access_token` — le token JWT retourné par l'API\n- `loged_user_id` — l'identifiant de l'utilisateur connecté\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON contenant le token d'accès, le token de rafraîchissement et les informations de l'utilisateur authentifié."
+					},
+					"response": []
+				},
+				{
+					"name": "get logged user",
+					"id": "8a9698e4-bd45-41c5-8e84-6b1c279c1bc2",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{access_token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/auth/me",
+						"description": "## Get Logged User\n\nRécupère les informations de l'utilisateur actuellement authentifié via l'API DummyJSON.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/auth/me`\n\n---\n\n### Authentification\n\nCet endpoint nécessite un token Bearer. Le token doit être passé dans l'en-tête `Authorization` :\n\n```\nAuthorization: Bearer {{access_token}}\n```\n\nLa variable `{{access_token}}` est automatiquement définie lors de l'exécution de la requête **login user and get token and id**.\n\n---\n\n### Requête\n\nAucun paramètre de requête ni corps de requête n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON contenant les informations du profil de l'utilisateur connecté (identifiant, nom, email, rôle, etc.)."
+					},
+					"response": []
+				},
+				{
+					"name": "get dummyjson token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5910eea1-4c3e-4fb6-b127-8127e78fd59e",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"",
+									"pm.environment.set(\"access_token\", responseJson.accessToken);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "29d28891-9ccb-4dc5-9e07-c7c7c19112d8",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"emmaj\",\n    \"password\": \"emmajpass\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/auth/login",
+						"description": "## Get DummyJSON Token\n\nAuthentifie un utilisateur avec des identifiants fixes auprès de l'API DummyJSON et récupère un token d'accès JWT.\n\n**Méthode :** `POST`\n**URL :** `{{base_url}}/auth/login`\n\n---\n\n### Authentification\n\nAucune authentification préalable n'est requise pour cet endpoint.\n\n---\n\n### Corps de la requête\n\nLe corps de la requête doit être au format JSON avec des identifiants prédéfinis :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `username` | `string` | Nom d'utilisateur (`\"emmaj\"`) |\n| `password` | `string` | Mot de passe (`\"emmajpass\"`) |\n\n**Exemple :**\n```json\n{\n  \"username\": \"emmaj\",\n  \"password\": \"emmajpass\"\n}\n```\n\n---\n\n### Script de test\n\nAprès réception de la réponse, le script de test extrait automatiquement le token JWT et l'enregistre dans la variable d'environnement `access_token`.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON contenant le token d'accès JWT, le token de rafraîchissement et les informations de l'utilisateur `emmaj`."
+					},
+					"response": []
+				},
+				{
+					"name": "get user infos",
+					"id": "082adb12-b2de-47d0-a8d7-7a7d9d584820",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}"
+						},
+						"url": "{{base_url}}/auth/me",
+						"description": "## Get User Infos\n\nRetrieves the currently authenticated user's profile information.\n\n**Method:** `GET`\n**URL:** `{{base_url}}/auth/me`\n\n---\n\n### Authentication\n\nThis request requires a Bearer token. The token is read from the `access_token` variable and sent in the `Authorization` header:\n\n```\nAuthorization: Bearer {{access_token}}\n```\n\n---\n\n### Response\n\nReturns a user object containing the authenticated user's profile data.\n\n**Key fields:**\n\n| Field | Type | Description |\n|---|---|---|\n| `id` | number | Unique user identifier |\n| `firstName` | string | First name |\n| `lastName` | string | Last name |\n| `maidenName` | string | Maiden name |\n| `age` | number | Age |\n| `gender` | string | Gender |\n| `email` | string | Email address |\n| `phone` | string | Phone number |\n| `username` | string | Username |\n| `birthDate` | string | Date of birth |\n| `image` | string | Profile image URL |\n| `bloodGroup` | string | Blood group |\n| `height` | number | Height (cm) |\n| `weight` | number | Weight (kg) |\n| `eyeColor` | string | Eye color |\n| `hair` | object | Hair details (`color`, `type`) |\n| `ip` | string | IP address |\n| `address` | object | Address details (`address`, `city`, `state`) |\n\n---\n\n### Example Response\n\n```json\n{\n  \"id\": 5,\n  \"firstName\": \"Emma\",\n  \"lastName\": \"Miller\",\n  \"maidenName\": \"Johnson\",\n  \"age\": 31,\n  \"gender\": \"female\",\n  \"email\": \"emma.miller@x.dummyjson.com\",\n  \"phone\": \"+91 759-776-1614\",\n  \"username\": \"emmaj\",\n  \"birthDate\": \"1994-6-13\",\n  \"image\": \"https://dummyjson.com/icon/emmaj/128\",\n  \"bloodGroup\": \"AB-\",\n  \"height\": 192.8,\n  \"weight\": 63.62,\n  \"eyeColor\": \"Green\",\n  \"hair\": {\n    \"color\": \"White\",\n    \"type\": \"Straight\"\n  },\n  \"ip\": \"224.126.22.183\",\n  \"address\": {\n    \"address\": \"607 Fourth Street\",\n    \"city\": \"Jacksonville\",\n    \"state\": \"Colorado\"\n  }\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"id": "3418731b-adf8-4acf-9cc0-44bd265f216c"
+		},
+		{
+			"name": "Posts",
+			"item": [
+				{
+					"name": "get all posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c8e9707e-eb2f-47ce-931b-bc3f5cbcb506",
+								"exec": [
+									"pm.test(\"Status 200\", function() {",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Array non vide\", function() {",
+									"  const data = pm.response.json();",
+									"  pm.expect(data.length).to.be.above(0);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "bdf3b72e-6853-4990-b934-668d3869b2e7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts",
+						"description": "## Get All Posts\n\nRécupère la liste complète des posts disponibles via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/posts`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Requête\n\nAucun paramètre de requête, en-tête ou corps de requête n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un tableau JSON contenant l'ensemble des posts. Chaque post possède les champs suivants :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du post |\n| `userId` | `integer` | Identifiant de l'utilisateur auteur du post |\n| `title` | `string` | Titre du post |\n| `body` | `string` | Contenu du post |"
+					},
+					"response": []
+				},
+				{
+					"name": "get post by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2359d47f-4d67-4a81-91a9-b6b07f5c481f",
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "c2d432d8-95a7-4baa-96e0-06fe9108121e",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts/{{post_id}}",
+						"description": "## Get Post By Id\n\nRécupère un post spécifique identifié par son `id` via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/posts/{{post_id}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `post_id` | `integer` | Identifiant unique du post à récupérer (variable d'environnement `{{post_id}}`) |\n\n---\n\n### Requête\n\nAucun corps de requête ni paramètre de requête supplémentaire n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON représentant le post correspondant à l'identifiant fourni :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du post |\n| `userId` | `integer` | Identifiant de l'utilisateur auteur du post |\n| `title` | `string` | Titre du post |\n| `body` | `string` | Contenu du post |"
+					},
+					"response": []
+				},
+				{
+					"name": "get post comments",
+					"id": "3e3b6729-ec25-48ef-806f-a331cffc8cd1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts/{{post_id}}/comments",
+						"description": "## Get Post Comments\n\nRécupère la liste des commentaires associés à un post spécifique via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/posts/{{post_id}}/comments`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `post_id` | `integer` | Identifiant unique du post dont on souhaite récupérer les commentaires (variable d'environnement `{{post_id}}`) |\n\n---\n\n### Requête\n\nAucun corps de requête ni paramètre de requête supplémentaire n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un tableau JSON contenant les commentaires du post. Chaque commentaire possède les champs suivants :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du commentaire |\n| `postId` | `integer` | Identifiant du post associé |\n| `name` | `string` | Nom de l'auteur du commentaire |\n| `email` | `string` | Email de l'auteur du commentaire |\n| `body` | `string` | Contenu du commentaire |"
+					},
+					"response": []
+				},
+				{
+					"name": "get post's tags",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "29edae3f-687b-4dfd-b6a2-ea5a5533521f",
+								"exec": [
+									"const responseJson = pm.response.json();",
+									"",
+									"myTags = responseJson.tags;",
+									"reactions = responseJson.reactions",
+									"",
+									"console.log(\"List of Tags : \\n\"+ myTags)",
+									"",
+									"console.log(\"Reactions => Likes=\"+reactions.likes+\" Dislikes = \"+reactions.dislikes)"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"id": "967773cb-05d5-4d4b-b834-70d6c68c4199",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/posts/{{post_id}}",
+						"description": "## Get Post Comments\n\nRécupère la liste des commentaires associés à un post spécifique via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/posts/{{post_id}}/comments`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `post_id` | `integer` | Identifiant unique du post dont on souhaite récupérer les commentaires (variable d'environnement `{{post_id}}`) |\n\n---\n\n### Requête\n\nAucun corps de requête ni paramètre de requête supplémentaire n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un tableau JSON contenant les commentaires du post. Chaque commentaire possède les champs suivants :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du commentaire |\n| `postId` | `integer` | Identifiant du post associé |\n| `name` | `string` | Nom de l'auteur du commentaire |\n| `email` | `string` | Email de l'auteur du commentaire |\n| `body` | `string` | Contenu du commentaire |"
+					},
+					"response": []
+				},
+				{
+					"name": "create new post",
+					"id": "d51c5289-7e5e-4944-a145-bcb6998b3b32",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\": 5,\n    \"title\": \"Test d'ajout d'un nouveau Poast\",\n    \"body\": \"Fil Rouge : Formation Pstman - Jour 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/posts{{post_path}}",
+						"description": "## Create New Post\n\nCrée un nouveau post en envoyant une requête `POST` à l'API. Ce endpoint permet d'ajouter une nouvelle entrée dans la liste des posts.\n\n---\n\n### Méthode & URL\n\n**Method:** `POST`  \n**URL:** `{{base_url}}/posts{{post_path}}`\n\n- `{{base_url}}` — Variable d'environnement pointant vers l'URL de base de l'API (ex. `https://jsonplaceholder.typicode.com`).\n- `{{post_path}}` — Variable d'environnement représentant le chemin complémentaire vers la ressource posts (généralement vide ou `/`).\n\n---\n\n### Request Body\n\nLe corps de la requête doit être envoyé en **JSON** (`Content-Type: application/json`) avec les champs suivants :\n\n| Champ    | Type     | Description                                              |\n|----------|----------|----------------------------------------------------------|\n| `userId` | `number` | Identifiant de l'utilisateur auteur du post.             |\n| `title`  | `string` | Titre du post à créer.                                   |\n| `body`   | `string` | Contenu principal du post.                               |\n\n**Exemple :**\n```json\n{\n    \"userId\": 5,\n    \"title\": \"Test d'ajout d'un nouveau Post\",\n    \"body\": \"Fil Rouge : Formation Postman - Jour 1\"\n}\n```\n\n---\n\n### Notes\n\n- L'API retourne généralement un objet représentant le post créé, avec un `id` généré automatiquement.\n- Cette requête est utilisée dans le cadre de la formation Postman (Ambient.it) pour illustrer la création de ressources via une API REST publique."
+					},
+					"response": []
+				}
+			],
+			"id": "713db9b0-1d84-4453-86a2-f3fe07d9b7e7"
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "get all users",
+					"id": "3c2134b6-7c02-4158-bb66-bf099ed922f9",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/users",
+						"description": "## Get All Users\n\nRetrieves the complete list of registered users.\n\n**Method:** `GET`\n**Endpoint:** `{{base_url}}/users`\n\n---\n\n### Authentication\n\nNo authentication is required for this endpoint.\n\n---\n\n### Request\n\nNo query parameters, headers, or request body are needed.\n\n---\n\n### Response\n\n**Status:** `200 OK`\n\nReturns a JSON object containing a `users` array. Each user object includes the following fields:\n\n| Field | Type | Description |\n|-------|------|-------------|\n| `id` | number | Unique identifier of the user |\n| `firstName` | string | First name |\n| `lastName` | string | Last name |\n| `maidenName` | string | Maiden name (if applicable) |\n| `age` | number | Age of the user |\n| `gender` | string | Gender |\n| `email` | string | Email address |\n| `phone` | string | Phone number |\n| `username` | string | Username |\n| `password` | string | Password (hashed) |\n| `birthDate` | string | Date of birth |\n| `image` | string | URL to the user's profile image |\n| `bloodGroup` | string | Blood group |\n| `height` | number | Height (in cm) |\n| `weight` | number | Weight (in kg) |\n| `eyeColor` | string | Eye color |\n| `hair` | object | Hair details: `color`, `type` |\n| `ip` | string | IP address |\n| `address` | object | Address details: `address`, `city`, `state` |\n\n**Example response structure:**\n\n```json\n{\n  \"users\": [\n    {\n      \"id\": 1,\n      \"firstName\": \"Emily\",\n      \"lastName\": \"Johnson\",\n      \"age\": 28,\n      \"gender\": \"female\",\n      \"email\": \"emily.johnson@example.com\",\n      \"username\": \"emilys\",\n      \"address\": {\n        \"address\": \"626 Main Street\",\n        \"city\": \"Phoenix\",\n        \"state\": \"Mississippi\"\n      }\n    }\n  ]\n}\n```"
+					},
+					"response": []
+				}
+			],
+			"id": "a7ee3e2e-b25a-471c-9ff2-18c194bd3273"
+		},
+		{
+			"name": "Comments",
+			"item": [],
+			"id": "e2c82e35-f017-4cf5-beb8-358e2d1fe416"
+		},
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "end to end test",
+					"item": [
+						{
+							"name": "create todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "1832d50d-2c41-415e-99a2-b36e70a652ba",
+										"exec": [
+											"//parse response to json ",
+											"const jsonData = pm.response.json();",
+											"",
+											"//Test de statut 201",
+											"pm.test(\"Status 201 - Todo créé\", function () {",
+											" pm.response.to.have.status(201);",
+											"});",
+											"",
+											"//Test de la présence de l'id du todo créé",
+											"pm.test(\"L'id est retourné\", function () {",
+											" pm.expect(jsonData).to.have.property(\"id\");",
+											"});",
+											"",
+											"//Test de la présence du titre du todo créé",
+											"pm.test(\"Le titre correspond\", function () {",
+											"    pm.expect(jsonData[pm.environment.get(\"todo_title\")]).to.eql(\"Create my first E2E Flow\");",
+											"});",
+											"",
+											"// Stocker l'id pour les requêtes suivantes",
+											"pm.environment.set(\"todo_id\", jsonData.id -1);",
+											"console.log(\"Todo ID = \", jsonData.id);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "e182c7ca-6506-4b49-ad33-a33e3000b64a",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"userId\": 1,\n    \"{{todo_title}}\": \"Create my first E2E Flow\",\n    \"completed\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/todos{{post_path}}"
+							},
+							"response": []
+						},
+						{
+							"name": "get created tod",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f7f9654e-71c1-4b98-a042-4bd4aa1af871",
+										"exec": [
+											"// Test : vérifier que le status est 200",
+											"pm.test(\"Status code est 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const createdTodo = pm.response.json();",
+											"",
+											"pm.test(\"Le todo a un champ 'id'\", function () {",
+											"    pm.expect(createdTodo).to.have.property(\"id\");",
+											"});",
+											"",
+											"pm.test(\"Le titre est une chaîne de caractères\", function () {",
+											"    pm.expect(createdTodo[pm.environment.get(\"todo_title\")]).to.be.a(\"string\");",
+											"});",
+											"",
+											"pm.test(\"Le champ 'completed' est un booléen\", function () {",
+											"    pm.expect(createdTodo.completed).to.be.a(\"boolean\");",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "2e17977d-153c-43f1-9017-6cfc9007c1ce",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/todos/{{todo_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "update created todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "65aee9c4-8952-4ba5-9b66-fb3d746d8756",
+										"exec": [
+											"// Test : vérifier que le status est 200",
+											"pm.test(\"Status code est 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"const updatedTodo = pm.response.json();",
+											"",
+											"pm.test(\"Le champ completed existe et est true\", function () {",
+											"    pm.expect(updatedTodo).to.have.property(\"completed\");",
+											"    pm.expect(updatedTodo.completed).to.be.true;",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "ad21acb3-32df-4f04-819b-11d2ddd49258",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"completed\": true\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{base_url}}/todos/{{todo_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "delete created todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "49aaf5b5-aff8-4617-b416-76d91479066e",
+										"exec": [
+											"pm.test(\"Status 200 - Todo supprimé\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"// Nettoyage de la variable d'environnement",
+											"pm.environment.set(\"todo_id\", parseInt(pm.environment.get(\"todo_id\"))+1);"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "d63d5dbf-8fd4-460f-86aa-5f3c57517458",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": "{{base_url}}/todos/{{todo_id}}"
+							},
+							"response": []
+						},
+						{
+							"name": "get deleted todo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "4e5fa790-a7d4-4fbd-8bcc-7fa4672c85f5",
+										"exec": [
+											"pm.test(\"Status 404 - Todo introuvable\", function () {",
+											" pm.response.to.have.status(404);",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {},
+										"requests": {}
+									}
+								}
+							],
+							"id": "d9b8e08a-6a60-47cf-b6ca-1d8d2a6d4dcf",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": "{{base_url}}/todos/{{todo_id}}"
+							},
+							"response": []
+						}
+					],
+					"id": "fdd2af99-7cc8-4d7e-af91-3a5b0778a115"
+				},
+				{
+					"name": "get all todos",
+					"id": "259628cd-64c6-4508-b38b-36f609b8e412",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/todos",
+						"description": "## Get All Todos\n\nRécupère la liste complète des todos disponibles via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/todos`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Requête\n\nAucun paramètre de requête, en-tête ou corps de requête n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un tableau JSON contenant l'ensemble des todos. Chaque todo possède les champs suivants :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du todo |\n| `userId` | `integer` | Identifiant de l'utilisateur associé |\n| `title` | `string` | Titre du todo |\n| `completed` | `boolean` | Indique si le todo est terminé |"
+					},
+					"response": []
+				},
+				{
+					"name": "get todo by id",
+					"id": "a8665543-79e8-4690-b87e-8d4f1451e907",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{base_url}}/todos/{{todo_id}}",
+						"description": "## Get Todo By Id\n\nRécupère un todo spécifique identifié par son `id` via l'API JSONPlaceholder.\n\n**Méthode :** `GET`\n**URL :** `{{base_url}}/todos/{{todo_id}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `todo_id` | `integer` | Identifiant unique du todo à récupérer (variable d'environnement `{{todo_id}}`) |\n\n---\n\n### Requête\n\nAucun corps de requête ni paramètre de requête supplémentaire n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON représentant le todo correspondant à l'identifiant fourni :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `id` | `integer` | Identifiant unique du todo |\n| `userId` | `integer` | Identifiant de l'utilisateur associé |\n| `title` | `string` | Titre du todo |\n| `completed` | `boolean` | Indique si le todo est terminé |"
+					},
+					"response": []
+				},
+				{
+					"name": "create new todo",
+					"id": "38618160-8f46-43fd-baf5-42e8425ae8c5",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"{{todo_title}}\": \"Apprendre Postman\",\n  \"completed\": false,\n  \"userId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos{{post_path}}",
+						"description": "## Create New Todo\n\nCrée un nouveau todo en envoyant une requête `POST` à l'API JSONPlaceholder.\n\n**Méthode :** `POST`\n**URL :** `{{base_url}}/todos{{post_path}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Corps de la requête\n\nLe corps de la requête doit être au format JSON :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `{{todo_title}}` | `string` | Titre du todo (ex : `\"Apprendre Postman\"`) |\n| `completed` | `boolean` | Statut du todo (`false` par défaut) |\n| `userId` | `integer` | Identifiant de l'utilisateur associé |\n\n**Exemple :**\n```json\n{\n  \"{{todo_title}}\": \"Apprendre Postman\",\n  \"completed\": false,\n  \"userId\": 1\n}\n```\n\n---\n\n### Réponse\n\n**Statut :** `201 Created`\n\nRetourne le todo créé avec un `id` généré par le serveur."
+					},
+					"response": []
+				},
+				{
+					"name": "replace todo",
+					"id": "da6988ad-7202-4693-af2b-543accca5ca7",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"{{todo_title}}\": \"Aller pecher\",\n    \"completed\": true,\n    \"userId\": 84\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos/{{todo_id}}",
+						"description": "## Replace Todo\n\nRemplace intégralement un todo existant en envoyant une requête `PUT` à l'API JSONPlaceholder. Tous les champs du todo sont remplacés par les valeurs fournies dans le corps de la requête.\n\n**Méthode :** `PUT`\n**URL :** `{{base_url}}/todos/{{todo_id}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `todo_id` | `integer` | Identifiant unique du todo à remplacer (variable d'environnement `{{todo_id}}`) |\n\n---\n\n### Corps de la requête\n\nLe corps de la requête doit être au format JSON et contenir l'ensemble des champs du todo :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `{{todo_title}}` | `string` | Titre du todo (ex : `\"Watch a movie\"`) |\n| `completed` | `boolean` | Statut du todo |\n| `userId` | `integer` | Identifiant de l'utilisateur associé |\n\n**Exemple :**\n```json\n{\n  \"{{todo_title}}\": \"Watch a movie\",\n  \"completed\": false,\n  \"userId\": 84\n}\n```\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne le todo tel qu'il a été remplacé, avec les nouvelles valeurs fournies."
+					},
+					"response": []
+				},
+				{
+					"name": "partial replace todo",
+					"id": "7fbb4078-4703-4bfa-8f35-c58b2091eafc",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"completed\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{base_url}}/todos/{{todo_id}}",
+						"description": "## Partial Replace Todo\n\nMet à jour partiellement un todo existant en envoyant une requête `PATCH` à l'API JSONPlaceholder. Seuls les champs fournis dans le corps de la requête sont modifiés.\n\n**Méthode :** `PATCH`\n**URL :** `{{base_url}}/todos/{{todo_id}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `todo_id` | `integer` | Identifiant unique du todo à modifier (variable d'environnement `{{todo_id}}`) |\n\n---\n\n### Corps de la requête\n\nLe corps de la requête doit être au format JSON et ne contenir que les champs à modifier :\n\n| Champ | Type | Description |\n|-------|------|-------------|\n| `completed` | `boolean` | Nouveau statut du todo |\n\n**Exemple :**\n```json\n{\n  \"completed\": true\n}\n```\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne le todo mis à jour avec les champs modifiés fusionnés avec les données existantes."
+					},
+					"response": []
+				},
+				{
+					"name": "delete todo",
+					"id": "44392965-1924-4e53-8b50-b3e604149058",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{base_url}}/todos/{{todo_id}}",
+						"description": "## Delete Todo\n\nSupprime un todo existant identifié par son `id` via l'API JSONPlaceholder.\n\n**Méthode :** `DELETE`\n**URL :** `{{base_url}}/todos/{{todo_id}}`\n\n---\n\n### Authentification\n\nAucune authentification n'est requise pour cet endpoint.\n\n---\n\n### Paramètres de chemin\n\n| Paramètre | Type | Description |\n|-----------|------|-------------|\n| `todo_id` | `integer` | Identifiant unique du todo à supprimer (variable d'environnement `{{todo_id}}`) |\n\n---\n\n### Corps de la requête\n\nAucun corps de requête n'est nécessaire.\n\n---\n\n### Réponse\n\n**Statut :** `200 OK`\n\nRetourne un objet JSON vide `{}` confirmant la suppression du todo."
+					},
+					"response": []
+				}
+			],
+			"id": "1bdc51d3-85d5-4e30-b947-2dc9bba17196"
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": {
+			"token": "{{access_token}}"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "24270e26-9731-4129-bce4-5b0e62dbe3db",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0fd1ca97-8444-43c9-931a-8d2e4ed191ea",
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": ""
+		}
+	]
+}
