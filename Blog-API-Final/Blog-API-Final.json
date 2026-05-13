@@ -515,6 +515,27 @@
 				},
 				{
 					"name": "get all todos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc61b47b-d3ac-4ce4-9072-5eb9c4601b12",
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Test des champs\", function(){",
+									"    todo = jsonData[0];",
+									"    pm.expect(todo).to.have.property(\"id\");",
+									"    pm.expect(todo).to.have.property(pm.environment.get(\"todo_title\"));",
+									"    pm.expect(todo).to.have.property(\"completed\");",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
 					"id": "259628cd-64c6-4508-b38b-36f609b8e412",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
