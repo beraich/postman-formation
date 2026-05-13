@@ -35,6 +35,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add results/report.html
+          git add result/report.html
           git commit -m "Add latest test report"
           git push
