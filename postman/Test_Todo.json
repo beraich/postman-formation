@@ -192,7 +192,7 @@
 						"id": "4e5fa790-a7d4-4fbd-8bcc-7fa4672c85f5",
 						"exec": [
 							"pm.test(\"Status 404 - Todo introuvable\", function () {",
-							" pm.response.to.have.status(404);",
+							"    pm.response.to.have.status(404);",
 							"});"
 						],
 						"type": "text/javascript",
