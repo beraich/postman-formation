@@ -164,7 +164,10 @@
 							"});",
 							"",
 							"// Nettoyage de la variable d'environnement",
-							"pm.environment.set(\"todo_id\", parseInt(pm.environment.get(\"todo_id\"))+1);"
+							"pm.environment.set(",
+							"    \"todo_id\", ",
+							"    parseInt(pm.environment.get(\"todo_id\"))+1",
+							"    );"
 						],
 						"type": "text/javascript",
 						"packages": {},
